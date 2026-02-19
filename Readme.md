@@ -6,9 +6,9 @@
 
 - Name: Yuvraj Singh
 - Role Applied For: Full Stack Developer
-- Email: your-email@example.com
-- Contact: +91-XXXXXXXXXX
-- GitHub: https://github.com/your-username
+- Email: yuvrajsingh3112s2@gmail.com
+- Contact: +91-9555103969
+- GitHub: https://github.com/YUVRAJSINGH3112
 
 ---
 
@@ -19,7 +19,7 @@ MERU is a full-stack invoice and finance management application built using Reac
 It supports:
 
 - User Registration & Login
-- JWT-based Authentication
+- JWT-based Authentication(I've used local Storage to storing token for simplity as it's just an intership assignment)
 - Protected Routes
 - Invoice Creation
 - Dashboard View
@@ -43,7 +43,6 @@ meru/
 - React (Vite)
 - React Router DOM
 - Axios (with Interceptors)
-- Context API
 - Tailwind CSS
 - shadcn/ui
 
@@ -52,8 +51,6 @@ meru/
 - Express.js
 - MongoDB
 - Mongoose
-- JWT
-- bcrypt
 - dotenv
 - CORS
 
@@ -71,60 +68,66 @@ Make sure you have:
 #  Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/meru.git
+git clone [https://github.com/your-username/meru.git](https://github.com/YUVRAJSINGH3112/Meru-Technology-Internship-Assignment-.git)
 cd meru
-
-backend_setup:
+```
+#  Step 2: Backend Setup
 
   prerequisites:
     - Node.js (v18 or above recommended)
     - MongoDB (local installation or MongoDB Atlas)
 
-  steps:
+steps:
 
-    - step: Navigate to backend folder
-      command: cd backend
+  ```bash
+  cd backend
+  ```
+  Install dependencies
+  ```bash
+ npm install
+  ```
 
-    - step: Install dependencies
-      command: npm install
+  - step: Create .env file inside backend folder
+  -  file_name: .env
+  - file_content:
+      ```
+      PORT: 3000
+      MONGO_URI: mongodb://127.0.0.1:27017/meru
+      JWT_SECRET: mysecretkey
 
-    - step: Create .env file inside backend folder
-      file_name: .env
-      file_content:
-        PORT: 3000
-        MONGO_URI: mongodb://127.0.0.1:27017/meru
-        JWT_SECRET: mysecretkey
-
-    - step: Start backend server
-      command: npm start
-
-    - step: (Optional) If using nodemon
-      command: npm run dev
+  - step: Start backend server
+       ```
+       npm start
 
   server_url: http://localhost:3000
 
-
-frontend_setup:
-
-  prerequisites:
-    - Node.js (v18 or above recommended)
-
-  steps:
-
-    - step: Open new terminal
-      note: Make sure backend is already running
-
-    - step: Navigate to frontend folder
-      command: cd frontend
-
-    - step: Install dependencies
-      command: npm install
-
-    - step: Start development server
-      command: npm run dev
-
-  development_server:
-    url: http://localhost:5173
-    note: Open this URL in your browser after running npm run dev
+#  Step 3: Frontend Setup
 
 
+steps: Navigate to Frontend Folder
+
+  ```bash
+  cd backend
+  ```
+  Install dependencies
+  ```bash
+ npm install
+  ```
+
+  - steps: Start Development Server
+      ```
+      npm run dev
+
+server_url: http://localhost:5173
+
+🙏 Note to the Reviewer
+
+I would like to respectfully mention that I came across this internship assignment on the 18th, while the submission deadline was on the 19th. This gave me approximately one day to design, develop, and structure the entire project.
+
+Due to the limited time, I focused primarily on implementing the core functionality and strictly following all the technical guidelines mentioned in the assignment. As a result, some parts of the UI may not be as polished as I would ideally like them to be. Additionally, while the codebase may not be perfectly refined in every area, it has been written in a clear, structured, and readable manner so that it can be easily refactored and improved further.
+
+I genuinely put my best effort into building a functional, secure, and properly structured full-stack application within the available timeframe.
+
+I am highly motivated and genuinely interested in this internship opportunity. It would mean a lot to me to be considered. I am confident that given the opportunity, I can further improve, refine, and contribute effectively.
+
+Thank you very much for your time and consideration.
