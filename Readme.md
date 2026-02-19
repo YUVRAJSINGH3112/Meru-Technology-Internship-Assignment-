@@ -6,9 +6,9 @@
 
 - Name: Yuvraj Singh
 - Role Applied For: Full Stack Developer
-- Email: your-email@example.com
-- Contact: +91-XXXXXXXXXX
-- GitHub: https://github.com/your-username
+- Email: yuvrajsingh3112s2@gmail.com
+- Contact: +91-9555103969
+- GitHub: https://github.com/YUVRAJSINGH3112
 
 ---
 
@@ -73,20 +73,22 @@ Make sure you have:
 ```bash
 git clone https://github.com/your-username/meru.git
 cd meru
-
-backend_setup:
+```
+#  Step 2: Backend Setup
 
   prerequisites:
     - Node.js (v18 or above recommended)
     - MongoDB (local installation or MongoDB Atlas)
 
-  steps:
+steps:
 
-    - step: Navigate to backend folder
-      command: cd backend
-
-    - step: Install dependencies
-      command: npm install
+  ```bash
+  cd backend
+  ```
+  Install dependencies
+  ```bash
+ npm install
+  ```
 
     - step: Create .env file inside backend folder
       file_name: .env
