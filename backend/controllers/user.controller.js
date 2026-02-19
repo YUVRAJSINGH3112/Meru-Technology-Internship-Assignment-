@@ -5,7 +5,7 @@ module.exports.register=async (req,res)=>{
     const {username,email,password}=req.body;
     try {
         const user=await userModel.create({username,email,password});
-        const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"1h"});
+        const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"7d"});
         
         res.status(201).json({
             success:true,
@@ -16,7 +16,7 @@ module.exports.register=async (req,res)=>{
     } catch (error) {
         res.status(500).json({
             success:false,
-            message:"Failed to register user",
+            message:error.message,
             error:error.message
         })
     }
@@ -37,7 +37,7 @@ module.exports.login=async (req,res)=>{
                 message: "Invalid email or password"
                 });
             }
-            const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"1h"});
+            const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"7d"});
             res.status(200).json({
                 success: true,
                 message: "User logged in successfully",

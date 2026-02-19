@@ -1,41 +1,125 @@
-const invoiceModel=require('../models/invoice.model');
+const Invoice = require("../models/invoice.model");
+const InvoiceLine = require("../models/InvoiceLine.model");
 
-module.exports.createInvoice=async (req,res)=>{
-    try{
-        const {invoiceNumber,customerName,issueDate,dueDate,total}=req.body;
+module.exports.getAllInvoices = async (req, res) => {
+  try {
+    const invoices = await Invoice.find({ isArchived: false })
+      .sort({ createdAt: -1 });
 
-        const newInvoice=await invoiceModel.create({
-            invoiceNumber,
-            customerName,
-            issueDate,
-            dueDate,
-            total
+    res.json({
+      success: true,
+      invoices
+    });
+
+  } catch (err) {
+    console.log("FETCH INVOICE ERROR:", err);
+    res.status(500).json({
+      message: err.message
+    });
+  }
+};
+
+module.exports.createInvoice = async (req, res) => {
+  try {
+    const {
+      invoiceNumber,
+      customerName,
+      issueDate,
+      dueDate,
+      total,
+      items
+    } = req.body;
+
+    // 1️⃣ Create Invoice
+    const newInvoice = await Invoice.create({
+      invoiceNumber,
+      customerName,
+      issueDate,
+      dueDate,
+      total
+    });
+
+    // 2️⃣ Create Invoice Lines
+    const invoiceLines = await Promise.all(
+      items.map(item =>
+        InvoiceLine.create({
+          invoiceId: newInvoice._id,
+          description: item.description,
+          quantity: item.quantity,
+          unitPrice: item.unitPrice
         })
+      )
+    );
 
-        res.json({
-        success:true,
-        invoice:newInvoice
-        })
-    }
-    catch(err){
-        res.status(500).send("Error creating invoice");
-    }
-}
+    res.json({
+      success: true,
+      invoice: newInvoice,
+      lines: invoiceLines
+    });
+
+  } catch (err) {
+    console.log("CREATE ERROR:", err);
+    res.status(500).json({
+      message: err.message
+    });
+  }
+};
+
 
 module.exports.getInvoiceById = async (req, res) => {
-    try{
-        const id =req.params.id;
+  try {
+    const invoice = await Invoice.findById(req.params.id);
 
-        const invoice=invoiceModel.findById(id);
-        res.json({
-        success:true,
-        invoice
-        })
+    if (!invoice) {
+      return res.status(404).json({ message: "Invoice not found" });
     }
-    catch(err){
-        res.status(500).send("Error fetching invoice");
+
+    const lines = await InvoiceLine.find({
+      invoiceId: invoice._id
+    });
+
+    res.json({
+      success: true,
+      invoice,
+      lines
+    });
+
+  } catch (err) {
+    console.log("GET INVOICE ERROR:", err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports.payInvoice = async (req, res) => {
+  try {
+    const { amount } = req.body;
+
+    const invoice = await Invoice.findById(req.params.id);
+
+    if (!invoice) {
+      return res.status(404).json({ message: "Invoice not found" });
     }
-}
+
+    invoice.amountPaid += amount;
+
+    if (invoice.amountPaid >= invoice.total) {
+      invoice.status = "PAID";
+      invoice.amountPaid = invoice.total;
+    }
+
+    await invoice.save();
+
+    res.json({
+      success: true,
+      invoice
+    });
+
+  } catch (err) {
+    console.log("PAY ERROR:", err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
 
 module.exports.getPaymentsByInvoiceId=async (req,res)=>{
     try{

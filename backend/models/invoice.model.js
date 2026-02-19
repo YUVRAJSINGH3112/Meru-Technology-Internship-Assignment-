@@ -5,6 +5,10 @@ const invoiceSchema = new mongoose.Schema({
         type: String, 
         required: true 
     },
+    invoiceNumber: { 
+        type: String, 
+        required: true 
+    },
     issueDate: { 
         type: Date, 
         required: true 
@@ -37,7 +41,6 @@ const invoiceSchema = new mongoose.Schema({
 
 invoiceSchema.pre('save', function(next) {
     this.balanceDue = this.total - this.amountPaid;
-    next();
 });
 
 module.exports=mongoose.model('Invoice', invoiceSchema);

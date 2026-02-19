@@ -4,8 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Sidebar from "../components/sidebar";
 import { Separator } from "@/components/ui/separator";
+import { useNavigate } from "react-router-dom";
+import api from "../lib/api";
 
 export default function CreateInvoice() {
+
+  const navigate = useNavigate();
+
   const [invoice, setInvoice] = useState({
     clientName: "",
     invoiceNumber: "",
@@ -62,10 +67,36 @@ export default function CreateInvoice() {
     (sum, item) => sum + item.total,
     0
   );
-
   const discount = 0;
-
   const grandTotal = subtotal - discount;
+
+ const handleGenerateInvoice = async () => {
+  try {
+
+    const payload = {
+      invoiceNumber: invoice.invoiceNumber,
+      customerName: invoice.clientName,
+      issueDate: new Date(),
+      dueDate: invoice.dueDate,
+      total: grandTotal,
+      items: invoice.items.map(item => ({
+        description: item.itemName,
+        quantity: item.quantity,
+        unitPrice: item.rate,
+      }))
+    };
+
+    const res = await api.post("/invoices/create", payload);
+
+    alert("Invoice Created Successfully");
+
+    navigate("/");
+
+  } catch (err) {
+    console.log(err.response?.data || err.message);
+    alert("Error creating invoice");
+  }
+};
 
   return (
     <div className="flex h-screen bg-muted/40">
@@ -78,7 +109,7 @@ export default function CreateInvoice() {
           <h1 className="text-2xl font-semibold">New Invoice</h1>
 
           <div className="flex gap-3">
-            <Button>Generate Invoice</Button>
+            <Button onClick={handleGenerateInvoice}>Generate Invoice</Button>
           </div>
         </div>
 
@@ -115,15 +146,16 @@ export default function CreateInvoice() {
               />
 
               <Input
-                value={invoice.dueDate}
-                onChange={(e) =>
-                  setInvoice(prev => ({
-                    ...prev,
-                    dueDate: e.target.value,
-                  }))
-                }
-                placeholder="Due date"
+                  type="date"
+                  value={invoice.dueDate}
+                  onChange={(e) =>
+                    setInvoice(prev => ({
+                      ...prev,
+                      dueDate: e.target.value,
+                    }))
+                  }
               />
+
 
               <Input
                 value={invoice.address}

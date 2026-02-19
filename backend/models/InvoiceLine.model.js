@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const invoiceLineSchema = new mongoose.Schema({
     invoiceId: {
-        type: Object.Schema.Types.ObjectId, 
-        ref: 'Invoice',
-        required: true 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Invoice',
+    required: true
     },
     description: { 
         type: String, 
@@ -20,13 +20,11 @@ const invoiceLineSchema = new mongoose.Schema({
     },
     lineTotal: { 
         type: Number, 
-        required: true 
     }
 });
 
 invoiceLineSchema.pre('save', function(next) {
     this.lineTotal = this.quantity * this.unitPrice;
-    next();
 });
 
 
