@@ -19,7 +19,7 @@ MERU is a full-stack invoice and finance management application built using Reac
 It supports:
 
 - User Registration & Login
-- JWT-based Authentication
+- JWT-based Authentication(I've used local Storage to storing token for simplity as it's just an intership assignment)
 - Protected Routes
 - Invoice Creation
 - Dashboard View
@@ -43,7 +43,6 @@ meru/
 - React (Vite)
 - React Router DOM
 - Axios (with Interceptors)
-- Context API
 - Tailwind CSS
 - shadcn/ui
 
@@ -52,8 +51,6 @@ meru/
 - Express.js
 - MongoDB
 - Mongoose
-- JWT
-- bcrypt
 - dotenv
 - CORS
 
